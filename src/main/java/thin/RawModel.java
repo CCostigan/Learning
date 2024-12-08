@@ -1,4 +1,4 @@
-package examples.thin;
+package thin;
 
 public class RawModel {
     
