@@ -19,6 +19,14 @@ class Loader {
     private List<Integer> vbolist = new ArrayList<Integer>();
 
 
+
+    public RawModel loadToVAO(float [] positions) {
+        int vao = createVAO();
+        storeAttribList(0, positions);
+        unbindVAO();
+        return new RawModel(vao, positions.length);
+    }    
+
     public RawModel loadToVAO(float [] positions, int[] indices) {
         int vao = createVAO();
         bindIndicesBuffer(indices);

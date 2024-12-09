@@ -41,30 +41,39 @@ public class MainGameLoop {
         Loader loader = new Loader();
         Renderer renderer = new Renderer();
 
+        ShaderInst shader = new ShaderInst();
+        // float [] vtxs = {
+        //      -0.5f, 0.5f, 0.0f,
+        //       0.5f,-0.5f, 0.0f,
+        //      -0.5f,-0.5f, 0.0f,
+        //      -0.5f, 0.5f, 0.0f,
+        //       0.5f, 0.5f, 0.0f,
+        //       0.5f,-0.5f, 0.0f,
+        // };
+        // RawModel m1 = loader.loadToVAO(vtxs);
         float [] verts = {
+             0.5f, 0.5f, 0.0f,
             -0.5f, 0.5f, 0.0f,
+            -0.5f,-0.5f, 0.0f,
              0.5f,-0.5f, 0.0f,
-             -0.5f,-0.5f, 0.0f,
-
-            //  -0.5f, 0.5f, 0.0f,
-              0.5f, 0.5f, 0.0f,
-            //   0.5f,-0.5f, 0.0f,
         };
         int [] indxs = {
             0,1,2,
-            0,1,3
+            0,3,2
         };
 
 
-        RawModel m = loader.loadToVAO(verts, indxs);
+        RawModel m2 = loader.loadToVAO(verts, indxs);
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
             renderer.prepare();
-            renderer.render(m);
+            shader.start();
+            renderer.render(m2);
+            shader.stop();
             DisplayManager.updateDisplay();
         }
 
-        
+        shader.cleanup();
         loader.cleanup();
 
         DisplayManager.destroyDisplay();

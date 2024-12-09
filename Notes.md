@@ -14,3 +14,4 @@
 * Tutorial 78 - https://www.youtube.com/watch?v=k4f-EtbCd-s   Shadows
 * Geometry shaders  Tutorial 49   https://www.youtube.com/watch?v=C8FK9Xn1gUM
 
+* Chap 5 shaders - https://www.youtube.com/watch?v=4w7lNF8dnYw
