@@ -1,4 +1,4 @@
-package thin;
+package thin.resources;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -35,7 +35,7 @@ public abstract class ShaderProg {
         glBindAttribLocation(progID, attribute, variableName);
     }
 
-    public ShaderProg(String vertf, String fragf) {
+    public ShaderProg(String vertf, String fragf) {        
         vertID = loadShader(vertf, GL_VERTEX_SHADER);
         fragID = loadShader(fragf, GL_FRAGMENT_SHADER);
         progID = glCreateProgram();
@@ -51,8 +51,9 @@ public abstract class ShaderProg {
     }
 
     private static int loadShader(String filename, int type) {
-        StringBuilder shaderSource = new StringBuilder();
+        StringBuilder shaderSource = new StringBuilder();        
         try {
+            ClassLoader.getSystemClassLoader().getResourceAsStream(filename);
             BufferedReader br = new BufferedReader(new FileReader(filename));
             String line;
             while ((line=br.readLine()) != null) {

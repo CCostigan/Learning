@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
+import thin.model.Loader;
+import thin.model.NewModel;
+import thin.model.RawModel;
+import thin.resources.ShaderInst;
+
 /**
  * Loosely following the demo here https://www.youtube.com/watch?v=WMiggUPst-Q
  */
@@ -40,17 +45,8 @@ public class MainGameLoop {
 
         Loader loader = new Loader();
         Renderer renderer = new Renderer();
-
         ShaderInst shader = new ShaderInst();
-        // float [] vtxs = {
-        //      -0.5f, 0.5f, 0.0f,
-        //       0.5f,-0.5f, 0.0f,
-        //      -0.5f,-0.5f, 0.0f,
-        //      -0.5f, 0.5f, 0.0f,
-        //       0.5f, 0.5f, 0.0f,
-        //       0.5f,-0.5f, 0.0f,
-        // };
-        // RawModel m1 = loader.loadToVAO(vtxs);
+
         float [] verts = {
              0.5f, 0.5f, 0.0f,
             -0.5f, 0.5f, 0.0f,
@@ -61,8 +57,6 @@ public class MainGameLoop {
             0,1,2,
             0,3,2
         };
-
-
         RawModel m2 = loader.loadToVAO(verts, indxs);
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            

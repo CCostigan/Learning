@@ -1,4 +1,4 @@
-package thin;
+package thin.resources;
 
 public class ShaderInst 
 extends ShaderProg {
@@ -6,7 +6,7 @@ extends ShaderProg {
     private static final String vertfilename = "src/main/res/glsl/vert_shader.glsl";
     private static final String fragfilename = "src/main/res/glsl/frag_shader.glsl";
 
-    ShaderInst() {
+    public ShaderInst() {
         super(vertfilename, fragfilename);
     }
 

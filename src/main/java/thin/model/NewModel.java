@@ -1,4 +1,4 @@
-package thin;
+package thin.model;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import org.lwjgl.BufferUtils;
 
 
-class NewModel {
+public class NewModel {
     ArrayList<Integer>vaolist = new ArrayList<Integer>();
     ArrayList<Integer>vbolist = new ArrayList<Integer>();
     int vtxCount;
@@ -72,7 +72,7 @@ class NewModel {
         glBindVertexArray(0); //Done updating that VAO
     }
 
-    void render() {
+    public void render() {
         glBindVertexArray(vaolist.get(0));
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
@@ -84,7 +84,7 @@ class NewModel {
             glBindVertexArray(0);
     }
 
-    static NewModel createHC() {
+    public static NewModel createHC() {
         float [] vertices = {
             -1.0f,  4.0f, -9.0f,     0.875f,  0.5f,      0.0f,  1.0f,  0.0f,   //   0.0f,  1.0f,  0.0f,  1.0f,
              1.0f,  4.0f,  9.0f,     0.625f,  0.75f,     0.0f,  1.0f,  0.0f,   //   0.0f,  1.0f,  0.0f,  1.0f,
