@@ -77,7 +77,7 @@ public class MainGameLoop {
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
             renderer.prepare();
-
+            
             // fshader.start();
             // renderer.render(m2);
             // fshader.stop();

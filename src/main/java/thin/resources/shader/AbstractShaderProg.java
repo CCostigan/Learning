@@ -41,13 +41,13 @@ public abstract class AbstractShaderProg {
         progID = glCreateProgram();
         glAttachShader(progID, vertID);
         glAttachShader(progID, fragID);
+        bindAttributes();//??
         glLinkProgram(progID);
         glValidateProgram(progID);        
         if(glGetProgrami(progID, GL_VALIDATE_STATUS)==GL_FALSE) {
             System.out.println(glGetProgramInfoLog(progID, 512));
             System.exit(-1);
         }
-        bindAttributes();
     }
 
     private static int loadShader(String filename, int type) {

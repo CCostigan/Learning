@@ -37,9 +37,10 @@ public class DisplayManager {
                 }
             }
             PixelFormat pfd = new PixelFormat();
-            ContextAttribs ctx = new ContextAttribs(3,2);
-            ctx.withForwardCompatible(true);
-            ctx.withProfileCore(true);
+            ContextAttribs ctx = new ContextAttribs(3,2)
+            .withForwardCompatible(true)
+            .withProfileCore(true)
+            ;
 
             Display.create(pfd, ctx);
             Display.setTitle("TESTING");
