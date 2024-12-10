@@ -1,10 +1,10 @@
-package thin.resources;
+package thin.resources.texture;
 
 public class TextureWrapper {
     
     public int textureID;
 
-    TextureWrapper(int id) {
+    public TextureWrapper(int id) {
         textureID = id;
     }
 

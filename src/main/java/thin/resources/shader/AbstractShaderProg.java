@@ -1,4 +1,4 @@
-package thin.resources;
+package thin.resources.shader;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public abstract class ShaderProg {
+public abstract class AbstractShaderProg {
 
     int progID;
     int vertID;
@@ -35,7 +35,7 @@ public abstract class ShaderProg {
         glBindAttribLocation(progID, attribute, variableName);
     }
 
-    public ShaderProg(String vertf, String fragf) {        
+    public AbstractShaderProg(String vertf, String fragf) {        
         vertID = loadShader(vertf, GL_VERTEX_SHADER);
         fragID = loadShader(fragf, GL_FRAGMENT_SHADER);
         progID = glCreateProgram();

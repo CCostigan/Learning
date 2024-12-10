@@ -1,4 +1,4 @@
-package thin.model;
+package thin.resources.model;
 
 public class RawModel {
     
@@ -6,7 +6,7 @@ public class RawModel {
     public int VBO;
     public int vertexCount;
 
-    RawModel(int vao, int vtxs) {
+    public RawModel(int vao, int vtxs) {
         VAO = vao;
         vertexCount = vtxs; 
     }
