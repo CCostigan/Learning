@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 
 import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
 
 
 public abstract class AbstractShaderProg {
@@ -38,11 +39,15 @@ public abstract class AbstractShaderProg {
         glBindAttribLocation(progID, attribute, variableName);
     }
 
-    private FloatBuffer matrixBuffer = FloatBuffer.allocate(16);// Will be reused
-    protected void loadMatrix(int location, Matrix4f matrix) {
-        matrix.get(matrixBuffer);
-        matrixBuffer.flip();
-        glUniformMatrix4(location, false, matrixBuffer);
+    public int getUniformLocation(String name) {
+        return glGetUniformLocation(progID, name);
+    }
+
+    protected abstract void getAllUniformLocations();
+
+    private FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+    public void loadMatrix(int location, Matrix4f matrix) {
+        glUniformMatrix4(location, false, matrix.get(matrixBuffer));
     }
     protected void loadVector(int location, float x, float y, float z) {
         glUniform3f(location, x, y, z);
@@ -67,6 +72,7 @@ public abstract class AbstractShaderProg {
             System.out.println(glGetProgramInfoLog(progID, 512));
             System.exit(-1);
         }
+        getAllUniformLocations();
     }
 
     private static int loadShader(String filename, int type) {

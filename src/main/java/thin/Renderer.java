@@ -5,8 +5,13 @@ import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import thin.resources.model.RawModel;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+
+import thin.resources.model.ModelEntity;
 import thin.resources.model.TexturedModel;
+import thin.resources.shader.ConcreteShader;
+import thin.resources.util.*;;
 
 public class Renderer {
     
@@ -16,22 +21,15 @@ public class Renderer {
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     }
 
-    // void render(RawModel m) {
-    //     glBindVertexArray(m.VAO);
-    //     glEnableVertexAttribArray(0);
-    //     glDrawArrays(GL_TRIANGLES, 0, m.vertexCount);
-    //     glDisableVertexAttribArray(0);
-    //     glBindVertexArray(0);
-    // }
-    void render(RawModel m) {
-        glBindVertexArray(m.VAO);
-        glEnableVertexAttribArray(0);
-        // glDrawArrays(GL_TRIANGLES, 0, m.vertexCount);
-        glDrawElements(GL_TRIANGLES, m.vertexCount, GL_UNSIGNED_INT, 0);
-        glDisableVertexAttribArray(0);
-        glBindVertexArray(0);
-    }
-    void render(TexturedModel m) {
+
+
+    void render(ModelEntity e, ConcreteShader sp) {
+        Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
+        int transformid = sp.getUniformLocation("transform");
+        System.out.println(transform);
+        sp.loadMatrix(transformid, transform);
+
+        TexturedModel m = e.getModel();
         glBindVertexArray(m.model.VAO);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

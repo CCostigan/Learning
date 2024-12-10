@@ -4,10 +4,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
+import org.joml.Vector3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import thin.resources.Loader;
+import thin.resources.model.ModelEntity;
 import thin.resources.model.NewModel;
 import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
@@ -21,9 +23,9 @@ import thin.resources.texture.TextureWrapper;
 
 public class MainGameLoop {
 
-    ArrayList<NewModel>NewModels = new ArrayList<NewModel>();
+    static ArrayList<NewModel>NewModels = new ArrayList<NewModel>();
 
-    int vtxCount = 0;
+    static int vtxCount = 0;
 
     public MainGameLoop() {
 
@@ -31,13 +33,6 @@ public class MainGameLoop {
 
     void loadNewModels() {
         NewModels.add(NewModel.createHC());
-    }
-
-    void render() {
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-        for(NewModel m: NewModels) {  
-            m.render();
-        }
     }
 
     public static void main(String [] argv) {
@@ -67,16 +62,27 @@ public class MainGameLoop {
             1.0f,0.0f,
         };
         TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
+        TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         RawModel m3 = loader.loadToVAO(verts, texuv, indxs);
         TexturedModel m3t = new TexturedModel(m3, tw);
+        Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
+        Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);
+        Vector3f msca = new Vector3f(1.0f, 1.0f, 1.0f);
+        ModelEntity ment = new ModelEntity(m3t, mloc, mrot, msca);
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
             renderer.prepare();
-            
+            ment.move(new Vector3f(0.001f, 0.0f, 0.0f));
+            ment.turn(new Vector3f(0.0f, 0.01f, 0.0f));
+    
             shader.start();
-            renderer.render(m3t);
+            renderer.render(ment, shader);
             shader.stop();
 
+            // for(NewModel m: NewModels) {  
+            //     m.render();
+            // }
+    
             DisplayManager.updateDisplay();
         }
 
