@@ -8,6 +8,7 @@
 * 2 VAOs - https://www.youtube.com/watch?v=GZ_1xOm-3qU  --- VAO - list of Atrtribute lists - each are VBOs - can contain any data you like
 
 * 7 Matrices- https://www.youtube.com/watch?v=oc8Yl4ZruCA
+* 8 Matrices, including camera https://youtu.be/50Y9u7K0PZo?t=1008
 * 12 Spec Lighting - https://www.youtube.com/watch?v=GZ_1xOm-3qU
 * Tutorial 25 multi light - https://www.youtube.com/watch?v=95WAAYsOifQ
 * Tutorial 27 - Skybox  https://www.youtube.com/watch?v=_Ix5oN8eC1E
