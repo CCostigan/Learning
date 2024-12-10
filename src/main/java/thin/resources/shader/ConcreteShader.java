@@ -1,5 +1,7 @@
 package thin.resources.shader;
 
+import org.joml.Matrix4f;
+
 public class ConcreteShader 
 extends AbstractShaderProg {
 
@@ -25,4 +27,13 @@ extends AbstractShaderProg {
         transformid = super.getUniformLocation("transform");
     }
     
+    public void loadProjectionMatrix(Matrix4f projection) {
+        loadMatrix(projectionid, projection);
+    }
+
+    public void loadTransformationMatrix(Matrix4f transform) {
+        loadMatrix(transformid, transform);
+        //System.out.println(transform);
+    }
+
 }

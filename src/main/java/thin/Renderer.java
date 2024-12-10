@@ -22,12 +22,15 @@ public class Renderer {
     }
 
 
+    static final float fov = 60.0f;
+
+
+    Matrix4f projection = new Matrix4f().perspective(fov, 1600.0f/900.0f, 0.01f, 10000.0f);
 
     void render(ModelEntity e, ConcreteShader sp) {
         Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
-        int transformid = sp.getUniformLocation("transform");
-        System.out.println(transform);
-        sp.loadMatrix(transformid, transform);
+        sp.loadProjectionMatrix(projection);
+        sp.loadTransformationMatrix(transform);
 
         TexturedModel m = e.getModel();
         glBindVertexArray(m.model.VAO);

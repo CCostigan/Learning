@@ -72,8 +72,8 @@ public class MainGameLoop {
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
             renderer.prepare();
-            ment.move(new Vector3f(0.001f, 0.0f, 0.0f));
-            ment.turn(new Vector3f(0.0f, 0.01f, 0.0f));
+            ment.move(new Vector3f(0.0f, 0.0f, -0.001f));
+            ment.turn(new Vector3f(0.0f, 0.00f, 0.01f));
     
             shader.start();
             renderer.render(ment, shader);
