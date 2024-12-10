@@ -6,6 +6,9 @@ import static org.lwjgl.opengl.GL20.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.FloatBuffer;
+
+import org.joml.Matrix4f;
 
 
 public abstract class AbstractShaderProg {
@@ -33,6 +36,22 @@ public abstract class AbstractShaderProg {
 
     protected void bindAttribute(int attribute, String variableName) {        
         glBindAttribLocation(progID, attribute, variableName);
+    }
+
+    private FloatBuffer matrixBuffer = FloatBuffer.allocate(16);// Will be reused
+    protected void loadMatrix(int location, Matrix4f matrix) {
+        matrix.get(matrixBuffer);
+        matrixBuffer.flip();
+        glUniformMatrix4(location, false, matrixBuffer);
+    }
+    protected void loadVector(int location, float x, float y, float z) {
+        glUniform3f(location, x, y, z);
+    }
+    protected void loadFloat(int location, float f) {
+        glUniform1f(location, f);
+    }
+    protected void loadInt(int location, int i) {
+        glUniform1i(location, i);
     }
 
     public AbstractShaderProg(String vertf, String fragf) {        
