@@ -2,6 +2,9 @@ package thin.resources.shader;
 
 import org.joml.Matrix4f;
 
+import thin.resources.items.Camera;
+import thin.resources.util.MathHelper;
+
 public class ConcreteShader 
 extends AbstractShaderProg {
 
@@ -10,6 +13,7 @@ extends AbstractShaderProg {
 
     int projectionid;
     int transformid;
+    int viewid;
 
     public ConcreteShader() {
         super(vertfilename, fragfilename);
@@ -25,6 +29,7 @@ extends AbstractShaderProg {
     protected void getAllUniformLocations() {
         projectionid = super.getUniformLocation("projection");
         transformid = super.getUniformLocation("transform");
+        viewid = super.getUniformLocation("viewmatrix");
     }
     
     public void loadProjectionMatrix(Matrix4f projection) {
@@ -33,7 +38,14 @@ extends AbstractShaderProg {
 
     public void loadTransformationMatrix(Matrix4f transform) {
         loadMatrix(transformid, transform);
-        //System.out.println(transform);
+    }
+
+    public void loadViewMatrix(Matrix4f viewmatrix) {
+        loadMatrix(viewid, viewmatrix);
+    }
+
+    public void loadViewMatrix(Camera camera) {
+        loadMatrix(viewid, MathHelper.createCameraMatrix(camera));
     }
 
 }

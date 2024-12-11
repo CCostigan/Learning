@@ -1,8 +1,10 @@
-package thin.resources.model;
+package thin.resources.items;
 
 import org.joml.Vector3f;
 
-public class ModelEntity {
+import thin.resources.model.TexturedModel;
+
+public class ModelItem {
     
 
     TexturedModel model;
@@ -12,7 +14,7 @@ public class ModelEntity {
     public Vector3f orientation;
     public Vector3f scale;
     
-    public ModelEntity(TexturedModel model, Vector3f position, Vector3f orientation, Vector3f scale) {
+    public ModelItem(TexturedModel model, Vector3f position, Vector3f orientation, Vector3f scale) {
         this.model = model;
         this.position = position;
         this.orientation = orientation;
