@@ -1,4 +1,4 @@
-package thin;
+package thin.resources;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
@@ -16,7 +16,7 @@ import static thin.resources.util.MathHelper.*;
 public class Renderer {
     
 
-    void prepare() {
+    public void prepare() {
         glClearColor(1, 0, 0, 1);
         glEnable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -29,7 +29,7 @@ public class Renderer {
 
     Matrix4f projection = new Matrix4f().perspective(fov, 1600.0f/900.0f, 0.01f, 10000.0f);
 
-    void render(ModelItem e, ConcreteShader sp) {
+    public void render(ModelItem e, ConcreteShader sp) {
         Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
         sp.loadProjectionMatrix(projection);
         sp.loadTransformationMatrix(transform);
