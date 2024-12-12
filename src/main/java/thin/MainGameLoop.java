@@ -1,7 +1,5 @@
 package thin;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import java.util.ArrayList;
 
 import org.joml.Vector3f;
@@ -12,6 +10,7 @@ import thin.resources.Loader;
 import thin.resources.items.Camera;
 import thin.resources.items.ModelItem;
 import thin.resources.model.NewModel;
+import thin.resources.model.OBJLoader;
 import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
 import thin.resources.shader.ConcreteShader;
@@ -44,81 +43,83 @@ public class MainGameLoop {
         Renderer renderer = new Renderer();
         ConcreteShader shader = new ConcreteShader();
 
-        float [] verts = {
-            -0.5f, 0.5f,-0.5f,	
-            -0.5f,-0.5f,-0.5f,	
-             0.5f,-0.5f,-0.5f,	
-             0.5f, 0.5f,-0.5f,		
-            
-            -0.5f, 0.5f, 0.5f,	
-            -0.5f,-0.5f, 0.5f,	
-             0.5f,-0.5f, 0.5f,	
-             0.5f, 0.5f, 0.5f,
-            
-             0.5f, 0.5f,-0.5f,	
-             0.5f,-0.5f,-0.5f,	
-             0.5f,-0.5f, 0.5f,	
-             0.5f, 0.5f, 0.5f,
-            
-            -0.5f, 0.5f,-0.5f,	
-            -0.5f,-0.5f,-0.5f,	
-            -0.5f,-0.5f, 0.5f,	
-            -0.5f, 0.5f, 0.5f,
-            
-            -0.5f, 0.5f, 0.5f,
-            -0.5f, 0.5f,-0.5f,
-             0.5f, 0.5f,-0.5f,
-             0.5f, 0.5f, 0.5f,
-            
-            -0.5f,-0.5f, 0.5f,
-            -0.5f,-0.5f,-0.5f,
-             0.5f,-0.5f,-0.5f,
-             0.5f,-0.5f, 0.5f
-        };
-        float [] texuv = {
-            0,0,
-            0,1,
-            1,1,
-            1,0,			
-            0,0,
-            0,1,
-            1,1,
-            1,0,			
-            0,0,
-            0,1,
-            1,1,
-            1,0,
-            0,0,
-            0,1,
-            1,1,
-            1,0,
-            0,0,
-            0,1,
-            1,1,
-            1,0,
-            0,0,
-            0,1,
-            1,1,
-            1,0
-        };
-        int [] indxs = {
-            0,1,3,	
-            3,1,2,	
-            4,5,7,
-            7,5,6,
-            8,9,11,
-            11,9,10,
-            12,13,15,
-            15,13,14,	
-            16,17,19,
-            19,17,18,
-            20,21,23,
-            23,21,22
-        };
-
         TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
-        TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
-        RawModel m3 = loader.loadToVAO(verts, texuv, indxs);
+        // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
+
+        // float [] verts = {
+        //     -0.5f, 0.5f,-0.5f,	
+        //     -0.5f,-0.5f,-0.5f,	
+        //      0.5f,-0.5f,-0.5f,	
+        //      0.5f, 0.5f,-0.5f,		
+            
+        //     -0.5f, 0.5f, 0.5f,	
+        //     -0.5f,-0.5f, 0.5f,	
+        //      0.5f,-0.5f, 0.5f,	
+        //      0.5f, 0.5f, 0.5f,
+            
+        //      0.5f, 0.5f,-0.5f,	
+        //      0.5f,-0.5f,-0.5f,	
+        //      0.5f,-0.5f, 0.5f,	
+        //      0.5f, 0.5f, 0.5f,
+            
+        //     -0.5f, 0.5f,-0.5f,	
+        //     -0.5f,-0.5f,-0.5f,	
+        //     -0.5f,-0.5f, 0.5f,	
+        //     -0.5f, 0.5f, 0.5f,
+            
+        //     -0.5f, 0.5f, 0.5f,
+        //     -0.5f, 0.5f,-0.5f,
+        //      0.5f, 0.5f,-0.5f,
+        //      0.5f, 0.5f, 0.5f,
+            
+        //     -0.5f,-0.5f, 0.5f,
+        //     -0.5f,-0.5f,-0.5f,
+        //      0.5f,-0.5f,-0.5f,
+        //      0.5f,-0.5f, 0.5f
+        // };
+        // float [] texuv = {
+        //     0,0,
+        //     0,1,
+        //     1,1,
+        //     1,0,			
+        //     0,0,
+        //     0,1,
+        //     1,1,
+        //     1,0,			
+        //     0,0,
+        //     0,1,
+        //     1,1,
+        //     1,0,
+        //     0,0,
+        //     0,1,
+        //     1,1,
+        //     1,0,
+        //     0,0,
+        //     0,1,
+        //     1,1,
+        //     1,0,
+        //     0,0,
+        //     0,1,
+        //     1,1,
+        //     1,0
+        // };
+        // int [] indxs = {
+        //     0,1,3,	
+        //     3,1,2,	
+        //     4,5,7,
+        //     7,5,6,
+        //     8,9,11,
+        //     11,9,10,
+        //     12,13,15,
+        //     15,13,14,	
+        //     16,17,19,
+        //     19,17,18,
+        //     20,21,23,
+        //     23,21,22
+        // };
+        // RawModel m3 = loader.loadToVAO(verts, texuv, indxs);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
+
         TexturedModel m3t = new TexturedModel(m3, tw);
         Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);

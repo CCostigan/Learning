@@ -47,4 +47,27 @@ public class Renderer {
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
     }
+
+
+    /**
+     * WIP
+     */
+    // http://www.opengl-tutorial.org/beginners-tutorials/tutorial-7-model-loading/
+    void rendercs() {
+
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
+
+        // glBindBuffer();
+        // glVertexPointer();
+        // glNormalPointer();
+        // glTexCoordPointer();
+        //glColorPointer();
+
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_COLOR_ARRAY);
+        glDisableClientState(GL_NORMAL_ARRAY);
+
+    }
 }

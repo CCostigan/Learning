@@ -25,27 +25,36 @@ public class Loader {
 
 
 
-    public RawModel loadToVAO(float [] positions) {
+    public RawModel loadToVAO(float [] points) {
         int vao = createVAO();
-        storeAttribList(0, 3, positions);
+        storeAttribList(0, 3, points);
         unbindVAO();
-        return new RawModel(vao, positions.length);
+        return new RawModel(vao, points.length);
     }    
 
-    public RawModel loadToVAO(float [] positions, int[] indices) {
+    public RawModel loadToVAO(float [] points, int[] indices) {
         int vao = createVAO();
         bindIndicesBuffer(indices);
-        storeAttribList(0, 3, positions);
+        storeAttribList(0, 3, points);
         unbindVAO();
-        return new RawModel(vao, positions.length);
+        return new RawModel(vao, points.length);
     }
-    public RawModel loadToVAO(float [] positions, float [] texuv, int[] indices) {
+    public RawModel loadToVAO(float [] points, float [] texuv, int[] indices) {
         int vao = createVAO();
         bindIndicesBuffer(indices);
-        storeAttribList(0, 3, positions);
+        storeAttribList(0, 3, points);
         storeAttribList(1, 2, texuv);
         unbindVAO();
-        return new RawModel(vao, positions.length);
+        return new RawModel(vao, points.length);
+    }
+    public RawModel loadToVAO(float [] points, float [] texuv,  float [] norms, int[] indices) {
+        int vao = createVAO();
+        bindIndicesBuffer(indices);
+        storeAttribList(0, 3, points);
+        storeAttribList(1, 2, texuv);
+        storeAttribList(2, 3, norms);
+        unbindVAO();
+        return new RawModel(vao, points.length);
     }
 
     public TextureWrapper loadTexture(String texturefile) {
