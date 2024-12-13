@@ -18,7 +18,9 @@ public class DisplayManager {
     public static int height = 900;
     public static int maxfps = 120;
 
-    public static void createDisplay(boolean fullscreen) {
+    public static void createDisplay(boolean fullscreen, int screenwidth, int screenheight) {
+        width = screenwidth;
+        height = screenheight;
         try {
             Display.setFullscreen(fullscreen);
             if (!fullscreen) {                

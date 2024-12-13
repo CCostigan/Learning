@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +20,15 @@ class vertex {
     Vector2f t;
     Vector3f n;
     public vertex(Vector3f vp, Vector2f vt, Vector3f vn) {
-        p=vp; t=vt; n=vn;
+        p = new Vector3f(vp); 
+        t = new Vector2f(vt); 
+        n = new Vector3f(vn);
     }
 }
 
 public class OBJLoader {
     
+    static final NumberFormat nf = NumberFormat.getNumberInstance();
 
     public static RawModel loadOBJModel(String filename, Loader loader) {
         try  {
@@ -60,22 +64,22 @@ public class OBJLoader {
                         vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
-                        // System.out.println(vtxs.get(vtxoff) +"  "+ txuv.get(texoff) +"  "+ norm.get(nrmoff));
                         vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
+                        System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
 
                         subs = tokens[i].split("/");
                         vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
-                        // System.out.println(vtxs.get(vtxoff) +"  "+ txuv.get(texoff) +"  "+ norm.get(nrmoff));
                         vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
+                        System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
 
                         subs = tokens[i+1].split("/");
                         vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
                         vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
-                        // System.out.println(vtxs.get(vtxoff) +"  "+ txuv.get(texoff) +"  "+ norm.get(nrmoff));
+                        System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
                     }
                 }                
             } br.close();   // End while - file is all done
@@ -88,8 +92,8 @@ public class OBJLoader {
             for (int i=0; i<vlist.size(); i++) {
                 vertex v = vlist.get(i);
                 fpoint[3*i+0] = v.p.x;
-                fpoint[3*i+1] = v.p.x;
-                fpoint[3*i+2] = v.p.x;
+                fpoint[3*i+1] = v.p.y;
+                fpoint[3*i+2] = v.p.z;
 
                 ftexuv[2*i+0] = v.t.x;
                 ftexuv[2*i+1] = v.t.y;

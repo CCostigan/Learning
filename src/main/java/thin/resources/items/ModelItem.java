@@ -15,10 +15,10 @@ public class ModelItem {
     public Vector3f scale;
     
     public ModelItem(TexturedModel model, Vector3f position, Vector3f orientation, Vector3f scale) {
-        this.model = model;
-        this.position = position;
-        this.orientation = orientation;
-        this.scale = scale;
+        this.model       = model;
+        this.position    = new Vector3f(position);
+        this.orientation = new Vector3f(orientation);
+        this.scale       = new Vector3f(scale);
     }
     
     public void move(Vector3f delta) {

@@ -1,7 +1,7 @@
 
 # This package follows some steps from the demos here
 
-* https://www.youtube.com/watch?v=WMiggUPst-Q
+* https://www.youtube.com/playlist?list=PLRIWtICgwaX0u7Rf9zkZhLoLuZVfUksDP
 
 * EnvironmentMap Cubemaps - 
 * 1 https://www.youtube.com/watch?v=VS8wlS9hF8E
@@ -18,3 +18,6 @@
 * Geometry shaders  Tutorial 49   https://www.youtube.com/watch?v=C8FK9Xn1gUM
 
 * Chap 5 shaders - https://www.youtube.com/watch?v=4w7lNF8dnYw
+
+
+// WA 500 013532
