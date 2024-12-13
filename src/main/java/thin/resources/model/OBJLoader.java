@@ -18,6 +18,9 @@ class vertex {
     Vector3f p;
     Vector2f t;
     Vector3f n;
+    public vertex(Vector3f vp, Vector2f vt, Vector3f vn) {
+        p=vp; t=vt; n=vn;
+    }
 }
 
 public class OBJLoader {
@@ -31,7 +34,6 @@ public class OBJLoader {
             List<Vector2f>txuv = new ArrayList<Vector2f>();
             List<Vector3f>norm = new ArrayList<Vector3f>();
     
-            List<Integer >indices = new ArrayList<Integer>();
             List<vertex>vlist = new ArrayList<vertex>();
     
             String line="";
@@ -55,40 +57,62 @@ public class OBJLoader {
         
                     for(int i=2; i < tokens.length-1; i++) {
                         String[] subs = tokens[1].split("/");
-                        vtxoff =Integer.parseInt(subs[0])-1;
+                        vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
-                        // bufr.add(vtxs.get(vtxoff).x); bufr.add(vtxs.get(vtxoff).y); bufr.add(vtxs.get(vtxoff).z);
-                        // bufr.add(txuv.get(texoff).x); bufr.add(txuv.get(texoff).y);
-                        // bufr.add(norm.get(nrmoff).x); bufr.add(norm.get(nrmoff).y); bufr.add(norm.get(nrmoff).z);
                         // System.out.println(vtxs.get(vtxoff) +"  "+ txuv.get(texoff) +"  "+ norm.get(nrmoff));
+                        vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
 
                         subs = tokens[i].split("/");
-                        vtxoff =Integer.parseInt(subs[0])-1;
+                        vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
-                        // bufr.add(vtxs.get(vtxoff).x); bufr.add(vtxs.get(vtxoff).y); bufr.add(vtxs.get(vtxoff).z);
-                        // bufr.add(txuv.get(texoff).x); bufr.add(txuv.get(texoff).y);
-                        // bufr.add(norm.get(nrmoff).x); bufr.add(norm.get(nrmoff).y); bufr.add(norm.get(nrmoff).z);
                         // System.out.println(vtxs.get(vtxoff) +"  "+ txuv.get(texoff) +"  "+ norm.get(nrmoff));
+                        vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
 
                         subs = tokens[i+1].split("/");
-                        vtxoff =Integer.parseInt(subs[0])-1;
+                        vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
-                        // bufr.add(vtxs.get(vtxoff).x); bufr.add(vtxs.get(vtxoff).y); bufr.add(vtxs.get(vtxoff).z);
-                        // bufr.add(txuv.get(texoff).x); bufr.add(txuv.get(texoff).y);
-                        // bufr.add(norm.get(nrmoff).x); bufr.add(norm.get(nrmoff).y); bufr.add(norm.get(nrmoff).z);
+                        vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
                         // System.out.println(vtxs.get(vtxoff) +"  "+ txuv.get(texoff) +"  "+ norm.get(nrmoff));
                     }
                 }                
             } br.close();   // End while - file is all done
-    
-            float [] fpoint = new float[vtxs.size()*3];
-            float [] ftexuv = new float[vtxs.size()*2];
-            float [] fnorms = new float[vtxs.size()*3];
-            int [] indxs = new int[vtxs.size()*3];
-    
+
+            float [] fpoint = new float[vlist.size()*3];
+            float [] ftexuv = new float[vlist.size()*2];            
+            float [] fnorms = new float[vlist.size()*3];
+            int [] indxs = new int[vlist.size()];
+            System.out.println("Len = "+vlist.size());
+            for (int i=0; i<vlist.size(); i++) {
+                vertex v = vlist.get(i);
+                fpoint[3*i+0] = v.p.x;
+                fpoint[3*i+1] = v.p.x;
+                fpoint[3*i+2] = v.p.x;
+
+                ftexuv[2*i+0] = v.t.x;
+                ftexuv[2*i+1] = v.t.y;
+
+                fnorms[3*i+0] = v.n.x;
+                fnorms[3*i+1] = v.n.y;
+                fnorms[3*i+2] = v.n.z;
+
+                indxs[i] = i;
+            }
+            
+            System.out.println("\nfpoint = "+fpoint.length);
+            for (float f: fpoint) System.out.print(" "+f);
+            System.out.println("\ntexuv = "+ftexuv.length);
+            for (float f: ftexuv) System.out.print(" "+f);
+            System.out.println("\nfnorms = "+fnorms.length);
+            for (float f: fnorms) System.out.print(" "+f);
+            System.out.println("\nindxs = "+indxs.length);
+            for (int f: indxs) System.out.print(" "+f);
+            System.out.println("");
+                        
+            // vtxs = fpoint.length;
+
             return loader.loadToVAO(fpoint, ftexuv, fnorms, indxs);
             } catch (IOException e) {
             e.printStackTrace();

@@ -1,9 +1,6 @@
 package thin.resources;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
 
 
 import org.lwjgl.LWJGLException;
@@ -24,11 +21,13 @@ public class DisplayManager {
     public static void createDisplay(boolean fullscreen) {
         try {
             Display.setFullscreen(fullscreen);
-            if (!fullscreen) {
+            if (!fullscreen) {                
                 DisplayMode dmode = new DisplayMode(width, height);
                 Display.setDisplayMode(dmode);
                 Display.setTitle("LWJGL Using 3.3");
             } else {
+                DisplayMode dmode = Display.getDesktopDisplayMode();
+                Display.setDisplayMode(dmode);
                 DisplayMode [] modes = Display.getAvailableDisplayModes();
                 for(DisplayMode mode : modes) {
                     System.out.println("Mode "+mode+" "+mode.hashCode());

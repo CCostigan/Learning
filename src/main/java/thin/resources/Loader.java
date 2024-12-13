@@ -113,4 +113,6 @@ public class Loader {
         for (int vbo:vbolist) glDeleteBuffers(vbo);
         for (int tex:textures) glDeleteTextures(tex);
     }
+
+
 }
