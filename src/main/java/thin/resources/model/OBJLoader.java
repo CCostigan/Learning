@@ -29,6 +29,7 @@ class vertex {
 public class OBJLoader {
     
     static final NumberFormat nf = NumberFormat.getNumberInstance();
+    static boolean logeverything = false;
 
     public static RawModel loadOBJModel(String filename, Loader loader) {
         try  {
@@ -104,16 +105,18 @@ public class OBJLoader {
 
                 indxs[i] = i;
             }
-            
-            System.out.println("\nfpoint = "+fpoint.length);
-            for (float f: fpoint) System.out.print(" "+f);
-            System.out.println("\ntexuv = "+ftexuv.length);
-            for (float f: ftexuv) System.out.print(" "+f);
-            System.out.println("\nfnorms = "+fnorms.length);
-            for (float f: fnorms) System.out.print(" "+f);
-            System.out.println("\nindxs = "+indxs.length);
-            for (int f: indxs) System.out.print(" "+f);
-            System.out.println("");
+
+            if(logeverything) {
+                System.out.println("\nfpoint = "+fpoint.length);
+                for (float f: fpoint) System.out.print(" "+f);
+                System.out.println("\ntexuv = "+ftexuv.length);
+                for (float f: ftexuv) System.out.print(" "+f);
+                System.out.println("\nfnorms = "+fnorms.length);
+                for (float f: fnorms) System.out.print(" "+f);
+                System.out.println("\nindxs = "+indxs.length);
+                for (int f: indxs) System.out.print(" "+f);
+                System.out.println("");    
+            }
                         
             // vtxs = fpoint.length;
 

@@ -59,8 +59,9 @@ public class MainGameLoop {
         TexturedModel m2t = new TexturedModel(m2, tl);
         ModelItem ment2 = new ModelItem(m2t, mloc, mrot, msca);
 
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
         TexturedModel m3t = new TexturedModel(m3, tw);
         ModelItem ment3 = new ModelItem(m3t, mloc, mrot, msca);
 
@@ -83,7 +84,7 @@ public class MainGameLoop {
 
             if(keymouse.canshow(2)) {
                 ment3.move(new Vector3f(0.0f, 0.0f, -0.001f));
-                ment3.turn(new Vector3f(0.0f, 0.01f, 0.01f));
+                ment3.turn(new Vector3f(0.0f, 0.001f, 0.0f));
                 renderer.render(ment3, shader);
             }
             
