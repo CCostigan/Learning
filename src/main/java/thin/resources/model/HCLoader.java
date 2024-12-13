@@ -84,6 +84,37 @@ public class HCLoader {
             1,1,
             1,0
         };
+        float [] norms = {
+             0.0f, 0.0f,-1.0f,
+             0.0f, 0.0f,-1.0f,
+             0.0f, 0.0f,-1.0f,
+             0.0f, 0.0f,-1.0f,
+
+             0.0f, 0.0f, 1.0f,
+             0.0f, 0.0f, 1.0f,
+             0.0f, 0.0f, 1.0f,
+             0.0f, 0.0f, 1.0f,
+
+             1.0f, 0.0f, 1.0f,
+             1.0f, 0.0f, 1.0f,
+             1.0f, 0.0f, 1.0f,
+             1.0f, 0.0f, 1.0f,
+
+            -1.0f, 0.0f, 1.0f,
+            -1.0f, 0.0f, 1.0f,
+            -1.0f, 0.0f, 1.0f,
+            -1.0f, 0.0f, 1.0f,
+
+             0.0f, 1.0f, 1.0f,
+             0.0f, 1.0f, 1.0f,
+             0.0f, 1.0f, 1.0f,
+             0.0f, 1.0f, 1.0f,
+
+             0.0f,-1.0f, 1.0f,
+             0.0f,-1.0f, 1.0f,
+             0.0f,-1.0f, 1.0f,
+             0.0f,-1.0f, 1.0f,
+        };
         int [] indxs = {
             0,1,3,	
             3,1,2,	
@@ -103,6 +134,6 @@ public class HCLoader {
             20,21,23,
             23,21,22
         };        
-        return loader.loadToVAO(verts, texuv, indxs);        
+        return loader.loadToVAO(verts, texuv, norms, indxs);        
     }
 }

@@ -52,9 +52,9 @@ public class MainGameLoop {
         Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f msca = new Vector3f(1.0f, 1.0f, 1.0f);
 
-        // RawModel m2 = HCLoader.loadHCModel(loader);
-        // TexturedModel m2t = new TexturedModel(m2, tw);
-        // ModelItem ment2 = new ModelItem(m2t, mloc, mrot, msca);
+        RawModel m2 = HCLoader.loadHCModel(loader);
+        TexturedModel m2t = new TexturedModel(m2, tw);
+        ModelItem ment2 = new ModelItem(m2t, mloc, mrot, msca);
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
         RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
@@ -71,14 +71,14 @@ public class MainGameLoop {
             camera.move();
             shader.loadViewMatrix(camera);
 
-            // ment2.move(new Vector3f(0.0f, 0.0f, -0.0001f));
-            // ment2.turn(new Vector3f(0.0f, 0.01f, 0.01f));
-            // renderer.render(ment2, shader);
+            ment2.move(new Vector3f(0.0f, 0.0f, -0.001f));
+            ment2.turn(new Vector3f(0.0f, 0.001f, 0.001f));
+            renderer.render(ment2, shader);
 
-            ment3.move(new Vector3f(0.0f, 0.0f, -0.0001f));
-            ment3.turn(new Vector3f(0.0f, 0.001f, 0.001f));
+            ment3.move(new Vector3f(0.0f, 0.0f, -0.001f));
+            ment3.turn(new Vector3f(0.0f, 0.01f, 0.01f));
             renderer.render(ment3, shader);
-
+            // WA 500 013532
 
             shader.stop();
 

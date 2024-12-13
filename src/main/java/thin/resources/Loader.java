@@ -47,7 +47,8 @@ public class Loader {
         unbindVAO();
         return new RawModel(vao, points.length);
     }
-    public RawModel loadToVAO(float [] points, float [] texuv,  float [] norms, int[] indices) {
+    public RawModel 
+    loadToVAO(float [] points, float [] texuv,  float [] norms, int[] indices) {
         int vao = createVAO();
         bindIndicesBuffer(indices);
         storeAttribList(0, 3, points);
