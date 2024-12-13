@@ -66,21 +66,21 @@ public class OBJLoader {
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
                         vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
-                        System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
+                        if(logeverything) System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
 
                         subs = tokens[i].split("/");
                         vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
                         vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
-                        System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
+                        if(logeverything) System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
 
                         subs = tokens[i+1].split("/");
                         vtxoff = Integer.parseInt(subs[0])-1;
                         texoff = Integer.parseInt(subs[1])-1;
                         nrmoff = Integer.parseInt(subs[2])-1;
                         vlist.add(new vertex(vtxs.get(vtxoff),txuv.get(texoff),norm.get(nrmoff)));
-                        System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
+                        if(logeverything) System.out.println(vtxs.get(vtxoff).toString(nf) +"  "+ txuv.get(texoff).toString(nf) +"  "+ norm.get(nrmoff).toString(nf));
                     }
                 }                
             } br.close();   // End while - file is all done

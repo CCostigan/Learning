@@ -2,18 +2,37 @@
 
 in vec3 position;
 in vec2 texcoords;
-
-out vec2 textureUV;
+in vec3 vtxnormal;
 
 uniform mat4 transform;
 uniform mat4 projection;
 uniform mat4 viewmatrix;
 
+uniform vec3 lightXYZ;
+
+out vec2 textureUV;
+out vec3 normalXYZ;
+out vec3 tolightXYZ;
+
 void main(void) {
     textureUV = texcoords;
+
+    //Multiply our position by txfm mtx... Because models can rotate
+    vec4 worldVtxXYZ = transform * vec4(position, 1.0);
+    tolightXYZ = lightXYZ - worldVtxXYZ.xyz;
+
+    //Multiply our normal by txfm mtx... Because normals rotate with the model
+    vec4 worldNormXYZ = transform * vec4(vtxnormal, 1.0);
+    normalXYZ = worldNormXYZ.xyz; 
+    
     // color = vec3(position.x+0.5, 1.0, position.y+0.5);
     // gl_Position = vec4(position, 1.0);
     // gl_Position = transform * vec4(position, 1.0);
     // gl_Position = projection * transform * vec4(position, 1.0);
     gl_Position = projection * viewmatrix * transform * vec4(position, 1.0);
+    
+    // Note, down here in gl_Position we could do this 
+    // gl_Position = projection * viewmatrix * worldVtxXYZ;
+    // We already calculated worldXYZ, why do it again?
+    // Well the answer is 'readability'  This is consistent with other examples
 }

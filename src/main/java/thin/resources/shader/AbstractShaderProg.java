@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
 
@@ -48,6 +49,9 @@ public abstract class AbstractShaderProg {
     private FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     public void loadMatrix(int location, Matrix4f matrix) {
         glUniformMatrix4(location, false, matrix.get(matrixBuffer));
+    }
+    protected void loadVector(int location, Vector3f v) {
+        glUniform3f(location, v.x, v.y, v.z);
     }
     protected void loadVector(int location, float x, float y, float z) {
         glUniform3f(location, x, y, z);
