@@ -44,6 +44,8 @@ public class Renderer {
         glEnableVertexAttribArray(1);
         glEnableVertexAttribArray(2);
 
+        sp.loadShininess(m.texture.reflectivity, m.texture.shinedamping);
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m.texture.textureID);
         glDrawElements(GL_TRIANGLES, m.model.vertexCount, GL_UNSIGNED_INT, 0);

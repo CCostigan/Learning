@@ -17,7 +17,9 @@ extends AbstractShaderProg {
     int viewid;
     int lightXYZ;
     int lightRGB;
-
+    int reflectivity;
+    int shinedamping;
+    
     public ConcreteShader() {
         super(vertfilename, fragfilename);
     }
@@ -35,6 +37,8 @@ extends AbstractShaderProg {
         viewid = super.getUniformLocation("viewmatrix");
         lightXYZ = super.getUniformLocation("lightXYZ");
         lightRGB = super.getUniformLocation("lightRGB");
+        reflectivity = super.getUniformLocation("reflectivity");
+        shinedamping = super.getUniformLocation("shinedamping");
     }
     
     public void loadProjectionMatrix(Matrix4f projection) {
@@ -57,5 +61,11 @@ extends AbstractShaderProg {
         super.loadVector(lightXYZ, light.location);
         super.loadVector(lightRGB, light.color);
     }
+    
+    public void loadShininess(float reflect, float damper) {
+        super.loadFloat(reflectivity, reflect);
+        super.loadFloat(shinedamping, damper);
+    }
+    
 
 }

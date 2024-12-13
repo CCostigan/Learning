@@ -13,6 +13,7 @@ uniform vec3 lightXYZ;
 out vec2 textureUV;
 out vec3 normalXYZ;
 out vec3 tolightXYZ;
+out vec3 toCameraXYZ;
 
 void main(void) {
     textureUV = texcoords;
@@ -24,6 +25,8 @@ void main(void) {
     //Multiply our normal by txfm mtx... Because normals rotate with the model
     vec4 worldNormXYZ = transform * vec4(vtxnormal, 1.0);
     normalXYZ = worldNormXYZ.xyz; 
+    
+    toCameraXYZ = (inverse(viewmatrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldVtxXYZ.xyz;
     
     // color = vec3(position.x+0.5, 1.0, position.y+0.5);
     // gl_Position = vec4(position, 1.0);

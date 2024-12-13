@@ -51,14 +51,12 @@ public class MainGameLoop {
         ConcreteShader shader = new ConcreteShader();
 
         TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
-        TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
+        tw.shinedamping = 10.0f;
+        tw.reflectivity = 1.0f;
+        // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f msca = new Vector3f(1.0f, 1.0f, 1.0f);
-
-        // RawModel m2 = HCLoader.loadHCModel(loader);
-        // TexturedModel m2t = new TexturedModel(m2, tl);
-        // ModelItem ment2 = new ModelItem(m2t, mloc, mrot, msca);
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
@@ -69,7 +67,7 @@ public class MainGameLoop {
         Camera camera = new Camera(0,0,3);        
         KeyMouse keymouse = new KeyMouse(false, width, height);
 
-        Light light = new Light(new Vector3f(20.0f, 0.0f, 20.0f),new Vector3f(1.0f, 1.0f, 1.0f));
+        Light light = new Light(new Vector3f(0.0f, 0.0f, 20.0f),new Vector3f(1.0f, 1.0f, 1.0f));
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
             renderer.prepare();
