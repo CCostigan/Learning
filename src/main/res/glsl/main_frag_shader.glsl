@@ -33,7 +33,7 @@ void main(void) {
     //out_color = vec4(color, 1.0);
     out_color = texture(textureSampler, textureUV);
     out_color *= getdiffuse();
-    out_color *= getspecular();
+    out_color += getspecular();
 }
 
 
