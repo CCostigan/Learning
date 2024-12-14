@@ -14,7 +14,6 @@ import org.joml.Vector3f;
 import thin.resources.Loader;
 
 
-
 class vertex {
     Vector3f p;
     Vector2f t;
@@ -43,7 +42,7 @@ public class OBJLoader {
     
             String line="";
             while((line=br.readLine())!=null) {
-                System.out.println("Line = "+line);
+                if(logeverything) System.out.println("Line = "+line);
                 String [] tokens = line.split(" ");
                 if(tokens[0].equals("#")) { 
                     /* Comment line, nothing to do  */    
@@ -89,7 +88,7 @@ public class OBJLoader {
             float [] ftexuv = new float[vlist.size()*2];            
             float [] fnorms = new float[vlist.size()*3];
             int [] indxs = new int[vlist.size()];
-            System.out.println("Len = "+vlist.size());
+            if(logeverything) System.out.println("Len = "+vlist.size());
             for (int i=0; i<vlist.size(); i++) {
                 vertex v = vlist.get(i);
                 fpoint[3*i+0] = v.p.x;
@@ -106,18 +105,6 @@ public class OBJLoader {
                 indxs[i] = i;
             }
 
-            if(logeverything) {
-                System.out.println("\nfpoint = "+fpoint.length);
-                for (float f: fpoint) System.out.print(" "+f);
-                System.out.println("\ntexuv = "+ftexuv.length);
-                for (float f: ftexuv) System.out.print(" "+f);
-                System.out.println("\nfnorms = "+fnorms.length);
-                for (float f: fnorms) System.out.print(" "+f);
-                System.out.println("\nindxs = "+indxs.length);
-                for (int f: indxs) System.out.print(" "+f);
-                System.out.println("");    
-            }
-                        
             // vtxs = fpoint.length;
 
             return loader.loadToVAO(fpoint, ftexuv, fnorms, indxs);

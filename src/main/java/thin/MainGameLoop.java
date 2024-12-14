@@ -50,9 +50,10 @@ public class MainGameLoop {
         Renderer renderer = new Renderer();
         ConcreteShader shader = new ConcreteShader();
 
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
-        tw.shinedamping = 10.0f;
-        tw.reflectivity = 1.0f;
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
+        tw.shinedamping = 1.0f;
+        tw.reflectivity = 10.0f;
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
         // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -60,7 +61,9 @@ public class MainGameLoop {
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
+
         TexturedModel m3t = new TexturedModel(m3, tw);
         ModelItem ment3 = new ModelItem(m3t, mloc, mrot, msca);
 
@@ -85,10 +88,6 @@ public class MainGameLoop {
             }
             
             shader.stop();
-
-            // for(NewModel m: NewModels) {  
-            //     m.render();
-            // }
     
             DisplayManager.updateDisplay();
             keymouse.update();
