@@ -7,16 +7,16 @@ import java.util.Map;
 import thin.resources.items.Camera;
 import thin.resources.items.Light;
 import thin.resources.items.ModelItem;
+import thin.resources.model.TexturedModel;
 import thin.resources.shader.ConcreteShader;
-import thin.resources.texture.TextureWrapper;
 
 public class MainRenderer {
     
 
     ConcreteShader shader = new ConcreteShader();
-    Renderer renderer = new Renderer();
+    Renderer renderer = new Renderer(shader);
 
-    Map<TextureWrapper, List<ModelItem>> entities = new HashMap<TextureWrapper, List<ModelItem>>();
+    Map<TexturedModel, List<ModelItem>> entities = new HashMap<TexturedModel, List<ModelItem>>();
 
     void render(Light sun, Camera camera) {
         renderer.prepare();

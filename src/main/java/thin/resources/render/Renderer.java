@@ -11,30 +11,84 @@ import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 
 import thin.resources.items.ModelItem;
+import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
 import thin.resources.shader.ConcreteShader;
+import thin.resources.texture.TextureWrapper;
 import thin.resources.util.*;
 import static thin.resources.util.MathHelper.*;
 
 import java.nio.FloatBuffer;
+import java.util.List;
+import java.util.Map;
 
 public class Renderer {
     
+
+    static final float fov = 45.0f * d2r;
+    Matrix4f projection = new Matrix4f().perspective(fov, 1600.0f/900.0f, 0.01f, 10000.0f);
+    ConcreteShader shader;
+
+    public Renderer(ConcreteShader cshader) {
+        shader = cshader;
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        shader.start();
+        shader.loadProjectionMatrix(projection);
+        shader.stop();
+    }
 
     public void prepare() {
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
+    }
+
+    public void render(Map<TexturedModel, List<ModelItem>> m) {
+        for(TexturedModel tm: m.keySet()) {
+            prepareModel(tm);
+            List<ModelItem> batch = m.get(m);
+            for(ModelItem e:batch) {
+                prepareInstance(e);
+                glDrawElements(GL_TRIANGLES, tm.model.vertexCount, GL_UNSIGNED_INT, 0);
+            }
+            unbindModel();
+        }
+    }
+
+    public void prepareModel(TexturedModel m) {
+        //TexturedModel m = e.getModel();
+        TextureWrapper mtx = m.texture;
+        RawModel rm = m.model;
+        glBindVertexArray(m.model.VAO);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
+        
+        shader.loadShininess(m.texture.reflectivity, m.texture.shinedamping);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, m.texture.textureID);
+        // glDrawElements(GL_TRIANGLES, m.model.vertexCount, GL_UNSIGNED_INT, 0);
 
     }
 
+    public void unbindModel() {
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
+        glBindVertexArray(0);
+    }
+    public void prepareInstance(ModelItem e) {
+        Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
+        shader.loadProjectionMatrix(projection);
+        shader.loadTransformationMatrix(transform);
+    }
 
 
-    static final float fov = 45.0f * d2r;
-
-
-    Matrix4f projection = new Matrix4f().perspective(fov, 1600.0f/900.0f, 0.01f, 10000.0f);
 
     public void render(ModelItem e, ConcreteShader sp) {
         Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);

@@ -49,8 +49,8 @@ public class MainGameLoop {
         DisplayManager.createDisplay(false, width, height);
 
         Loader loader = new Loader();
-        Renderer renderer = new Renderer();
         ConcreteShader shader = new ConcreteShader();
+        Renderer renderer = new Renderer(shader);
 
         TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
         // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
