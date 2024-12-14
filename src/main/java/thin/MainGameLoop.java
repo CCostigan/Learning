@@ -50,9 +50,10 @@ public class MainGameLoop {
         Renderer renderer = new Renderer();
         ConcreteShader shader = new ConcreteShader();
 
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
         tw.shinedamping = 1.0f;
-        tw.reflectivity = 10.0f;
+        tw.reflectivity = 0.0f;
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
         // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -71,12 +72,13 @@ public class MainGameLoop {
         KeyMouse keymouse = new KeyMouse(false, width, height);
 
         Light light = new Light(new Vector3f(0.0f, 0.0f, 20.0f),new Vector3f(1.0f, 1.0f, 1.0f));
+        float ambientval = 0.2f;
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
             renderer.prepare();
 
             shader.start();
-            shader.loadLight(light);
+            shader.loadLight(light, ambientval);
 
             camera.move();
             shader.loadViewMatrix(camera);
@@ -90,8 +92,7 @@ public class MainGameLoop {
             shader.stop();
     
             DisplayManager.updateDisplay();
-            keymouse.update();
-            
+            keymouse.update();            
         }
 
         shader.cleanup();

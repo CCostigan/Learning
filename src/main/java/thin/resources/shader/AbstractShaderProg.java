@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -18,6 +20,8 @@ public abstract class AbstractShaderProg {
     int progID;
     int vertID;
     int fragID;
+
+    List<String>shaders = new ArrayList<String>();
 
     protected abstract void bindAttributes();
 
@@ -63,7 +67,7 @@ public abstract class AbstractShaderProg {
         glUniform1i(location, i);
     }
 
-    public AbstractShaderProg(String vertf, String fragf) {        
+    public AbstractShaderProg(String vertf, String fragf) { 
         vertID = loadShader(vertf, GL_VERTEX_SHADER);
         fragID = loadShader(fragf, GL_FRAGMENT_SHADER);
         progID = glCreateProgram();
@@ -78,6 +82,12 @@ public abstract class AbstractShaderProg {
         }
         getAllUniformLocations();
     }
+
+    static void checkShader() {
+
+
+    }
+
 
     private static int loadShader(String filename, int type) {
         StringBuilder shaderSource = new StringBuilder();        

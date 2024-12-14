@@ -10,6 +10,7 @@ in vec3 toCameraXYZ;
 uniform sampler2D textureSampler;
 uniform vec3 lightRGB;
 
+uniform float ambient;
 uniform float reflectivity;
 uniform float shinedamping;
 
@@ -18,7 +19,7 @@ out vec4 out_color;
 
 vec4 getdiffuse() {
     float nDotLight = dot(normalXYZ, tolightXYZ);
-    float bright = max(nDotLight, 0.0);
+    float bright = max(nDotLight, ambient);
     return vec4((bright * lightRGB), 1.0);
 }
 

@@ -17,6 +17,7 @@ extends AbstractShaderProg {
     int viewid;
     int lightXYZ;
     int lightRGB;
+    int ambient;
     int reflectivity;
     int shinedamping;
     
@@ -37,6 +38,7 @@ extends AbstractShaderProg {
         viewid = super.getUniformLocation("viewmatrix");
         lightXYZ = super.getUniformLocation("lightXYZ");
         lightRGB = super.getUniformLocation("lightRGB");
+        ambient = super.getUniformLocation("ambient");
         reflectivity = super.getUniformLocation("reflectivity");
         shinedamping = super.getUniformLocation("shinedamping");
     }
@@ -57,9 +59,10 @@ extends AbstractShaderProg {
         loadMatrix(viewid, MathHelper.createCameraMatrix(camera));
     }
 
-    public void loadLight(Light light) {
+    public void loadLight(Light light, float ambientval) {
         super.loadVector(lightXYZ, light.location);
         super.loadVector(lightRGB, light.color);
+        super.loadFloat(ambient, ambientval);
     }
     
     public void loadShininess(float reflect, float damper) {
