@@ -1,6 +1,8 @@
 package thin;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import org.joml.Vector3f;
 import org.lwjgl.input.Keyboard;
@@ -50,23 +52,36 @@ public class MainGameLoop {
         Renderer renderer = new Renderer();
         ConcreteShader shader = new ConcreteShader();
 
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
+        // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
         tw.shinedamping = 1.0f;
         tw.reflectivity = 0.0f;
-        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
-        // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f msca = new Vector3f(1.0f, 1.0f, 1.0f);
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
-        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
 
         TexturedModel m3t = new TexturedModel(m3, tw);
         ModelItem ment3 = new ModelItem(m3t, mloc, mrot, msca);
+
+        Random r = new Random();
+        float d = 20.0f;
+        List<ModelItem>models = new ArrayList<ModelItem>();
+        for(int i=0;i<100;i++) {
+            models.add(
+                new ModelItem(m3t,
+                    new Vector3f(2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d),
+                    new Vector3f(r.nextFloat(), r.nextFloat(), r.nextFloat()),
+                    new Vector3f(1.0f, 1.0f, 1.0f)
+                )
+            );
+        }
 
         Camera camera = new Camera(0,0,3);        
         KeyMouse keymouse = new KeyMouse(false, width, height);
@@ -87,6 +102,9 @@ public class MainGameLoop {
             ment3.turn(new Vector3f(0.0f, 0.001f, 0.0f));
             if(keymouse.canshow(2)) {
                 renderer.render(ment3, shader);
+            }
+            for (ModelItem m: models) {
+                renderer.render(m, shader);
             }
             
             shader.stop();
