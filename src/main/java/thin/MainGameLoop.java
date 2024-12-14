@@ -10,7 +10,6 @@ import org.lwjgl.opengl.Display;
 
 import thin.resources.DisplayManager;
 import thin.resources.Loader;
-import thin.resources.Renderer;
 import thin.resources.items.Camera;
 import thin.resources.items.Light;
 import thin.resources.items.ModelItem;
@@ -19,6 +18,7 @@ import thin.resources.model.NewModel;
 import thin.resources.model.OBJLoader;
 import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
+import thin.resources.render.Renderer;
 import thin.resources.shader.ConcreteShader;
 import thin.resources.texture.TextureLoader;
 import thin.resources.texture.TextureWrapper;
@@ -63,8 +63,8 @@ public class MainGameLoop {
         Vector3f msca = new Vector3f(1.0f, 1.0f, 1.0f);
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
-        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
 
         TexturedModel m3t = new TexturedModel(m3, tw);
@@ -104,6 +104,7 @@ public class MainGameLoop {
                 renderer.render(ment3, shader);
             }
             for (ModelItem m: models) {
+                m.turn(new Vector3f(0.0f, 0.001f, 0.001f));
                 renderer.render(m, shader);
             }
             

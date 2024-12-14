@@ -1,4 +1,4 @@
-package thin.resources;
+package thin.resources.render;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
