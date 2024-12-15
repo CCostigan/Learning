@@ -2,8 +2,7 @@ package thin.resources.render;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.glBufferSubData;
+import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
@@ -25,12 +24,13 @@ import java.util.Map;
 public class EntityRenderer {
     
 
-    static final float fov = 45.0f * d2r;
-    Matrix4f projection = new Matrix4f().perspective(fov, 1600.0f/900.0f, 0.01f, 10000.0f);
     ConcreteShader shader;
+    Matrix4f projection;
 
-    public EntityRenderer(ConcreteShader cshader) {
+    public EntityRenderer(ConcreteShader cshader, Matrix4f project) {
         shader = cshader;
+        projection = project;
+
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
@@ -40,12 +40,6 @@ public class EntityRenderer {
         shader.stop();
     }
 
-    public void prepare() {
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
-    }
 
     public void render(Map<TexturedModel, List<Entity>> m) {
         for(TexturedModel tm: m.keySet()) {
@@ -82,6 +76,7 @@ public class EntityRenderer {
         glDisableVertexAttribArray(2);
         glBindVertexArray(0);
     }
+    
     public void prepareInstance(Entity e) {
         Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
         shader.loadProjectionMatrix(projection);

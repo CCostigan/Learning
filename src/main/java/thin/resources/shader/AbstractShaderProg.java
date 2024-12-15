@@ -1,14 +1,36 @@
 package thin.resources.shader;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL14.*;
+import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL20.glUniformMatrix4;
+import static org.lwjgl.opengl.GL21.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL32.*;
+import static org.lwjgl.opengl.GL33.*;
+import static org.lwjgl.opengl.GL40.*;
+import static org.lwjgl.opengl.GL41.*;
+import static org.lwjgl.opengl.GL42.*;
+import static org.lwjgl.opengl.GL43.*;
+import static org.lwjgl.opengl.GL44.*;
+import static org.lwjgl.opengl.GL45.*;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -18,11 +40,15 @@ import org.lwjgl.BufferUtils;
 public abstract class AbstractShaderProg {
 
     int progID;
-    int vertID;
-    int fragID;
+    // int vertID;
+    // int fragID;
+
+    boolean done = false;
 
     List<String>shaders = new ArrayList<String>();
-
+    List<Integer>shaderIDs = new ArrayList<Integer>();
+    Map<String,Long>timemap = new HashMap<String,Long>();
+    
     protected abstract void bindAttributes();
 
     public void start() {
@@ -33,10 +59,11 @@ public abstract class AbstractShaderProg {
     }
     public void cleanup() {
         stop();
-        glDetachShader(progID, vertID);
-        glDetachShader(progID, fragID);        
-        glDeleteShader(vertID);
-        glDeleteShader(fragID);
+        done = true;
+        for(int shaderID: shaderIDs) {
+            glDetachShader(progID, shaderID);
+            glDeleteShader(shaderID);
+        }
         glDeleteProgram(progID);
     }
 
@@ -67,12 +94,21 @@ public abstract class AbstractShaderProg {
         glUniform1i(location, i);
     }
 
-    public AbstractShaderProg(String vertf, String fragf) { 
-        vertID = loadShader(vertf, GL_VERTEX_SHADER);
-        fragID = loadShader(fragf, GL_FRAGMENT_SHADER);
+    public AbstractShaderProg(String [] shadernames) { 
+        int shaderType = 0;
         progID = glCreateProgram();
-        glAttachShader(progID, vertID);
-        glAttachShader(progID, fragID);
+        for(String shaderfile: shadernames) {
+            if(shaderfile.length()==0) ;//Do nothing... NEXT!
+            else if(shaderfile.contains("vert")) shaderType = GL_VERTEX_SHADER;
+            else if(shaderfile.contains("frag")) shaderType = GL_FRAGMENT_SHADER;
+            else if(shaderfile.contains("geom")) shaderType = GL_GEOMETRY_SHADER;
+            else if(shaderfile.contains("tess")) shaderType = GL_TESS_CONTROL_SHADER;
+            else if(shaderfile.contains("comp")) shaderType = GL_COMPUTE_SHADER;
+            int shaderID = compileShader(shaderfile, shaderType);            
+            glAttachShader(progID, shaderID);
+            shaders.add(shaderfile);
+            shaderIDs.add(shaderID);
+        }
         bindAttributes();//??
         glLinkProgram(progID);
         glValidateProgram(progID);        
@@ -81,24 +117,21 @@ public abstract class AbstractShaderProg {
             System.exit(-1);
         }
         getAllUniformLocations();
-    }
-
-    static void checkShader() {
-
-
+        shaderFileCheck();
     }
 
 
-    private static int loadShader(String filename, int type) {
-        StringBuilder shaderSource = new StringBuilder();        
+    private int compileShader(String filename, int type) {        
+        StringBuilder shaderSource = new StringBuilder();
         try {
+            timemap.put(filename, Files.getLastModifiedTime(Paths.get(filename)).toMillis());
             ClassLoader.getSystemClassLoader().getResourceAsStream(filename);
             BufferedReader br = new BufferedReader(new FileReader(filename));
             String line;
             while ((line=br.readLine()) != null) {
                 shaderSource.append(line).append('\n');
             }
-            br.close();            
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Couldn't read file "+filename);
@@ -109,10 +142,33 @@ public abstract class AbstractShaderProg {
         glCompileShader(shader);
         if(glGetShaderi(shader, GL_COMPILE_STATUS) == GL_FALSE) {
             System.out.println(glGetShaderInfoLog(shader, 512));
-            System.out.println("Couldn't conpile shader"+filename);
+            System.out.println("Couldn't conpile shader "+filename);
             System.exit(-1);
         }
         return shader;
     }
     
+
+    void shaderFileCheck() {
+        System.out.println("Starting shader file check thread...");
+        Thread fileCheckThread = new Thread(new Runnable() {
+            @Override
+            public void run() {   //throw new UnsupportedOperationException("Unimplemented method 'run'");
+                while (!done) {
+                    try {
+                        Thread.sleep(1000);
+                        for(String filename : shaders) {
+                            long ftime = Files.getLastModifiedTime(Paths.get(filename)).toMillis();
+                            if(ftime != timemap.get(filename)) {
+                                System.out.println("Filetime "+filename+" - "+ftime+" THIS WOULD TRIGGER A RELOAD");
+                                timemap.replace(filename, Files.getLastModifiedTime(Paths.get(filename)).toMillis());
+                            }                            
+                        }
+                    } catch (Exception e) { e.printStackTrace(); }
+                }
+            }
+        });
+        fileCheckThread.start();
+    }
+
 }

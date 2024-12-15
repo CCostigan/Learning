@@ -22,7 +22,8 @@ extends AbstractShaderProg {
     int shinedamping;
     
     public ConcreteShader() {
-        super(vertfilename, fragfilename);
+        // super(vertfilename, fragfilename);
+        super(new String [] {vertfilename, fragfilename});
     }
 
     @Override
