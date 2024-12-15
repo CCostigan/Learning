@@ -6,7 +6,6 @@ import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL14.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL20.glUniformMatrix4;
 import static org.lwjgl.opengl.GL21.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL31.*;
@@ -40,8 +39,6 @@ import org.lwjgl.BufferUtils;
 public abstract class AbstractShaderProg {
 
     int progID;
-    // int vertID;
-    // int fragID;
 
     boolean done = false;
 
@@ -166,6 +163,7 @@ public abstract class AbstractShaderProg {
                         }
                     } catch (Exception e) { e.printStackTrace(); }
                 }
+                System.out.println("Stopping shader file check thread...");
             }
         });
         fileCheckThread.start();

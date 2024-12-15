@@ -54,13 +54,10 @@ public class MainGameLoop {
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Water_Alpha.png"));
-        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
         tw.shinedamping = 10.0f;
         tw.reflectivity = 1.0f;
-        Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
-        Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);
-        Vector3f msca = new Vector3f(1.0f, 1.0f, 1.0f);
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
         RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
@@ -68,7 +65,6 @@ public class MainGameLoop {
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/X15.obj", loader);
 
         TexturedModel m3t = new TexturedModel(m3, tw);
-        Entity ment3 = new Entity(m3t, mloc, mrot, msca);
 
         Random r = new Random();
         float d = 50.0f;
@@ -87,7 +83,7 @@ public class MainGameLoop {
         Camera camera = new Camera(0,0,3);        
         KeyMouse keymouse = new KeyMouse(false, width, height);
 
-        Light light = new Light(new Vector3f(0.0f, 0.0f, 0.0f),new Vector3f(1.0f, 1.0f, 1.0f));
+        Light light = new Light(new Vector3f(10.0f, 20.0f, 40.0f),new Vector3f(1.0f, 1.0f, 1.0f));
         float ambientval = 0.2f;
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
