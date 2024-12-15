@@ -54,7 +54,7 @@ public class MainGameLoop {
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Water_Alpha.png"));
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/TinyBubbles.png"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
         tw.shinedamping = 10.0f;
         tw.reflectivity = 1.0f;
