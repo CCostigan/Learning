@@ -20,12 +20,12 @@ public class Camera {
     }
 
     public void move() {
-        if(Keyboard.isKeyDown(Keyboard.KEY_W)) translate.z -= 0.01f;
-        if(Keyboard.isKeyDown(Keyboard.KEY_S)) translate.z += 0.01f;
-        if(Keyboard.isKeyDown(Keyboard.KEY_A)) translate.x -= 0.01f;
-        if(Keyboard.isKeyDown(Keyboard.KEY_D)) translate.x += 0.01f;
-        if(Keyboard.isKeyDown(Keyboard.KEY_Q)) translate.y += 0.01f;
-        if(Keyboard.isKeyDown(Keyboard.KEY_Z)) translate.y -= 0.01f;
+        if(Keyboard.isKeyDown(Keyboard.KEY_W)) translate.z -= 0.1f;
+        if(Keyboard.isKeyDown(Keyboard.KEY_S)) translate.z += 0.1f;
+        if(Keyboard.isKeyDown(Keyboard.KEY_A)) translate.x -= 0.1f;
+        if(Keyboard.isKeyDown(Keyboard.KEY_D)) translate.x += 0.1f;
+        if(Keyboard.isKeyDown(Keyboard.KEY_Q)) translate.y += 0.1f;
+        if(Keyboard.isKeyDown(Keyboard.KEY_Z)) translate.y -= 0.1f;
         //System.out.println("Camera:"+translate.toString(nf));
     }
 }

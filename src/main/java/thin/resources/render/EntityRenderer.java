@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL30.*;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 
-import thin.resources.items.ModelItem;
+import thin.resources.items.Entity;
 import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
 import thin.resources.shader.ConcreteShader;
@@ -22,14 +22,14 @@ import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Map;
 
-public class Renderer {
+public class EntityRenderer {
     
 
     static final float fov = 45.0f * d2r;
     Matrix4f projection = new Matrix4f().perspective(fov, 1600.0f/900.0f, 0.01f, 10000.0f);
     ConcreteShader shader;
 
-    public Renderer(ConcreteShader cshader) {
+    public EntityRenderer(ConcreteShader cshader) {
         shader = cshader;
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
@@ -47,11 +47,11 @@ public class Renderer {
         glCullFace(GL_BACK);
     }
 
-    public void render(Map<TexturedModel, List<ModelItem>> m) {
+    public void render(Map<TexturedModel, List<Entity>> m) {
         for(TexturedModel tm: m.keySet()) {
             prepareModel(tm);
-            List<ModelItem> batch = m.get(m);
-            for(ModelItem e:batch) {
+            List<Entity> batch = m.get(tm);
+            for(Entity e:batch) {
                 prepareInstance(e);
                 glDrawElements(GL_TRIANGLES, tm.model.vertexCount, GL_UNSIGNED_INT, 0);
             }
@@ -82,7 +82,7 @@ public class Renderer {
         glDisableVertexAttribArray(2);
         glBindVertexArray(0);
     }
-    public void prepareInstance(ModelItem e) {
+    public void prepareInstance(Entity e) {
         Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
         shader.loadProjectionMatrix(projection);
         shader.loadTransformationMatrix(transform);
@@ -90,28 +90,28 @@ public class Renderer {
 
 
 
-    public void render(ModelItem e, ConcreteShader sp) {
-        Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
-        sp.loadProjectionMatrix(projection);
-        sp.loadTransformationMatrix(transform);
+    // public void render(ModelItem e, ConcreteShader sp) {
+    //     Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
+    //     sp.loadProjectionMatrix(projection);
+    //     sp.loadTransformationMatrix(transform);
 
-        TexturedModel m = e.getModel();
-        glBindVertexArray(m.model.VAO);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glEnableVertexAttribArray(2);
+    //     TexturedModel m = e.getModel();
+    //     glBindVertexArray(m.model.VAO);
+    //     glEnableVertexAttribArray(0);
+    //     glEnableVertexAttribArray(1);
+    //     glEnableVertexAttribArray(2);
 
-        sp.loadShininess(m.texture.reflectivity, m.texture.shinedamping);
+    //     sp.loadShininess(m.texture.reflectivity, m.texture.shinedamping);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m.texture.textureID);
-        glDrawElements(GL_TRIANGLES, m.model.vertexCount, GL_UNSIGNED_INT, 0);
+    //     glActiveTexture(GL_TEXTURE0);
+    //     glBindTexture(GL_TEXTURE_2D, m.texture.textureID);
+    //     glDrawElements(GL_TRIANGLES, m.model.vertexCount, GL_UNSIGNED_INT, 0);
 
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        glDisableVertexAttribArray(2);
-        glBindVertexArray(0);
-    }
+    //     glDisableVertexAttribArray(0);
+    //     glDisableVertexAttribArray(1);
+    //     glDisableVertexAttribArray(2);
+    //     glBindVertexArray(0);
+    // }
 
 
     /**

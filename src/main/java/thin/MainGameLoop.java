@@ -12,14 +12,12 @@ import thin.resources.DisplayManager;
 import thin.resources.Loader;
 import thin.resources.items.Camera;
 import thin.resources.items.Light;
-import thin.resources.items.ModelItem;
-import thin.resources.model.HCLoader;
+import thin.resources.items.Entity;
 import thin.resources.model.NewModel;
 import thin.resources.model.OBJLoader;
 import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
-import thin.resources.render.Renderer;
-import thin.resources.shader.ConcreteShader;
+import thin.resources.render.MainRenderer;
 import thin.resources.texture.TextureLoader;
 import thin.resources.texture.TextureWrapper;
 import thin.resources.util.KeyMouse;
@@ -49,35 +47,38 @@ public class MainGameLoop {
         DisplayManager.createDisplay(false, width, height);
 
         Loader loader = new Loader();
-        ConcreteShader shader = new ConcreteShader();
-        Renderer renderer = new Renderer(shader);
+        // ConcreteShader shader = new ConcreteShader();
+        // Renderer renderer = new Renderer(shader);
+        MainRenderer mainrend = new MainRenderer();
 
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
-        // TextureWrapper tl = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Water_Alpha.png"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
-        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
-        tw.shinedamping = 1.0f;
-        tw.reflectivity = 0.0f;
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
+        tw.shinedamping = 10.0f;
+        tw.reflectivity = 1.0f;
         Vector3f mloc = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f mrot = new Vector3f(0.0f, 0.0f, 0.0f);
         Vector3f msca = new Vector3f(1.0f, 1.0f, 1.0f);
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
-        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
-        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/X15.obj", loader);
 
         TexturedModel m3t = new TexturedModel(m3, tw);
-        ModelItem ment3 = new ModelItem(m3t, mloc, mrot, msca);
+        Entity ment3 = new Entity(m3t, mloc, mrot, msca);
 
         Random r = new Random();
-        float d = 20.0f;
-        List<ModelItem>models = new ArrayList<ModelItem>();
-        for(int i=0;i<100;i++) {
+        float d = 50.0f;
+        List<Entity>models = new ArrayList<Entity>();
+        for(int i=0;i<400;i++) {
             models.add(
-                new ModelItem(m3t,
+                new Entity(m3t,
                     new Vector3f(2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d),
-                    new Vector3f(r.nextFloat(), r.nextFloat(), r.nextFloat()),
+                    new Vector3f(6.2f*r.nextFloat(), 6.2f*r.nextFloat(), 6.2f*r.nextFloat()),
+                    // new Vector3f(0.0f, 0.0f, 0.0f),
                     new Vector3f(1.0f, 1.0f, 1.0f)
                 )
             );
@@ -86,36 +87,27 @@ public class MainGameLoop {
         Camera camera = new Camera(0,0,3);        
         KeyMouse keymouse = new KeyMouse(false, width, height);
 
-        Light light = new Light(new Vector3f(0.0f, 0.0f, 20.0f),new Vector3f(1.0f, 1.0f, 1.0f));
+        Light light = new Light(new Vector3f(0.0f, 0.0f, 0.0f),new Vector3f(1.0f, 1.0f, 1.0f));
         float ambientval = 0.2f;
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
-            renderer.prepare();
-
-            shader.start();
-            shader.loadLight(light, ambientval);
-
+  
             camera.move();
-            shader.loadViewMatrix(camera);
-
-            // ment3.move(new Vector3f(0.0f, 0.0f, -0.001f));
-            ment3.turn(new Vector3f(0.0f, 0.001f, 0.0f));
-            if(keymouse.canshow(2)) {
-                renderer.render(ment3, shader);
-            }
-            for (ModelItem m: models) {
-                m.turn(new Vector3f(0.0f, 0.001f, 0.001f));
-                renderer.render(m, shader);
+  
+            for (Entity m: models) {
+                m.turn(new Vector3f(0.0f, 0.01f, 0.01f));
+                mainrend.peocessEntity(m);
             }
             
-            shader.stop();
-    
+            mainrend.render(camera, light, ambientval);
+
             DisplayManager.updateDisplay();
             keymouse.update();            
         }
 
-        shader.cleanup();
+        // shader.cleanup();
         loader.cleanup();
+        mainrend.cleanup();
 
         DisplayManager.destroyDisplay();
     }
