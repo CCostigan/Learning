@@ -52,16 +52,17 @@ public class MainGameLoop {
         MainRenderer mainrend = new MainRenderer();
 
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
-        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Day_Light.jpg"));
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Water_Alpha.png"));
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/TinyBubbles.png"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/TinyBubbles.png"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
         tw.shinedamping = 10.0f;
         tw.reflectivity = 1.0f;
 
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
-        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/X15.obj", loader);
 
         TexturedModel m3t = new TexturedModel(m3, tw);
