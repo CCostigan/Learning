@@ -59,8 +59,8 @@ public class MainGameLoop {
         tw.shinedamping = 10.0f;
         tw.reflectivity = 1.0f;
 
-        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/X15.obj", loader);
 
