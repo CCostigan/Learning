@@ -18,12 +18,15 @@ out vec4 out_color;
 
 
 vec4 getdiffuse() {
+    //float ambient1 = 0.1;
     float nDotLight = dot(normalXYZ, tolightXYZ);
     float bright = max(nDotLight, ambient);
-    return vec4((bright * lightRGB), 1.0);
+    return vec4((bright * lightRGB), 1.0)/2.0;
 }
 
 vec4 getspecular() {
+    //float reflectivity1 = 0.8;
+    //float shinedamping1 = 1.0;    
     vec3 reflected = reflect(tolightXYZ, normalXYZ);
     float specpower = max(dot(toCameraXYZ, reflected), 0.0);
     float damped = pow(specpower, shinedamping);

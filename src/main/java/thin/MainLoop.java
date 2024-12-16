@@ -55,15 +55,16 @@ public class MainLoop {
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_City_Light.jpg"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/Earth_Water_Alpha.png"));
         // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/TinyBubbles.png"));
-        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
-        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
-        tw.reflectivity = 1.0f;
-        tw.shinedamping = 8.0f;
+        TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/lighter.png"));
+        // TextureWrapper tw = new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tiny.png"));
+        tw.reflectivity = 0.8f;
+        tw.shinedamping = 1.0f;
+        float ambientval = 0.1f;
 
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Square.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Cube.obj", loader);
-        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
-        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
+        // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/Sphere.obj", loader);
+        RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/dragon.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/bunny.obj", loader);
 
@@ -72,7 +73,7 @@ public class MainLoop {
         Random r = new Random();
         float d = 25.0f;
         List<Entity>models = new ArrayList<Entity>();
-        for(int i=0;i<100;i++) {
+        for(int i=0;i<0;i++) {
             models.add(
                 new Entity(m3t,
                     new Vector3f(2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d),
@@ -86,8 +87,7 @@ public class MainLoop {
         Camera camera = new Camera(0,0,3);        
         KeyMouse keymouse = new KeyMouse(false, width, height);
 
-        Light light = new Light(new Vector3f(100.0f, 200.0f, 400.0f),new Vector3f(1.0f, 1.0f, 1.0f));
-        float ambientval = 0.2f;
+        Light light = new Light(new Vector3f(400.0f, 400.0f, 400.0f),new Vector3f(1.0f, 1.0f, 1.0f));
         models.add( new Entity(m3t, new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(2.0f, 2.0f, 2.0f)) );
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            

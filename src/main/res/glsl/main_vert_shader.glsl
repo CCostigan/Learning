@@ -20,13 +20,13 @@ void main(void) {
 
     //Multiply our position by txfm mtx... Because models can rotate
     vec4 worldVtxXYZ = transform * vec4(position, 1.0);
-    tolightXYZ = normalize(lightXYZ - worldVtxXYZ.xyz);
+    tolightXYZ = normalize(vec4(lightXYZ, 0.0) - worldVtxXYZ).xyz;
 
     //Multiply our normal by txfm mtx... Because normals rotate with the model
     vec4 srfNorm = transform * vec4(vtxnormal, 1.0);
-    normalXYZ = normalize(srfNorm.xyz); 
+    normalXYZ = normalize(srfNorm).xyz; 
     
-    toCameraXYZ = normalize(worldVtxXYZ.xyz - (inverse(viewmatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
+    toCameraXYZ = normalize(worldVtxXYZ - (inverse(viewmatrix) * vec4(0.0, 0.0, 0.0, 1.0))).xyz;
     
     // color = vec3(position.x+0.5, 1.0, position.y+0.5);
     // gl_Position = vec4(position, 1.0);
