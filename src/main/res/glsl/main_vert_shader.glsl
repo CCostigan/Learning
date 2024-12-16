@@ -26,7 +26,7 @@ void main(void) {
     vec4 srfNorm = transform * vec4(vtxnormal, 1.0);
     normalXYZ = normalize(srfNorm.xyz); 
     
-    toCameraXYZ = normalize((inverse(viewmatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - worldVtxXYZ.xyz);
+    toCameraXYZ = normalize(worldVtxXYZ.xyz - (inverse(viewmatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
     
     // color = vec3(position.x+0.5, 1.0, position.y+0.5);
     // gl_Position = vec4(position, 1.0);

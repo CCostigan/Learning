@@ -20,6 +20,12 @@
 * Chap 5 shaders - https://www.youtube.com/watch?v=4w7lNF8dnYw
 
 
+* https://www.mathsisfun.com/algebra/matrix-introduction.html
+
+# The Specular and Diffuse lighting examples in the above sample fail miserably
+* Trying YET ANOTHER tutorial
+* https://en.wikibooks.org/wiki/GLSL_Programming/GLUT/Diffuse_Reflection
+
 // WA 500 013532
 
 

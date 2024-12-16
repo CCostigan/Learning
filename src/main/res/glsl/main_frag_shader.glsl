@@ -24,8 +24,8 @@ vec4 getdiffuse() {
 }
 
 vec4 getspecular() {
-    vec3 reflected = reflect(toCameraXYZ, normalXYZ);
-    float specpower = max(dot(reflected, toCameraXYZ), 0.0);
+    vec3 reflected = reflect(tolightXYZ, normalXYZ);
+    float specpower = max(dot(toCameraXYZ, reflected), 0.0);
     float damped = pow(specpower, shinedamping);
     return vec4((damped * reflectivity * lightRGB), 1.0);
 }

@@ -41,14 +41,16 @@ public abstract class AbstractShaderProg {
     int progID;
 
     boolean done = false;
+    boolean reload = false;
 
-    List<String>shaders = new ArrayList<String>();
+    String [] shadernames;
     List<Integer>shaderIDs = new ArrayList<Integer>();
     Map<String,Long>timemap = new HashMap<String,Long>();
     
     protected abstract void bindAttributes();
 
     public void start() {
+        if(reload) loadShaders(shadernames);
         glUseProgram(progID);
     }
     public void stop() {
@@ -92,7 +94,13 @@ public abstract class AbstractShaderProg {
     }
 
     public AbstractShaderProg(String [] shadernames) { 
+        loadShaders(shadernames);
+    }
+
+    private void loadShaders(String [] sourcenames) { 
+        reload = false;
         int shaderType = 0;
+        shadernames = sourcenames;
         progID = glCreateProgram();
         for(String shaderfile: shadernames) {
             if(shaderfile.length()==0) ;//Do nothing... NEXT!
@@ -103,7 +111,6 @@ public abstract class AbstractShaderProg {
             else if(shaderfile.contains("comp")) shaderType = GL_COMPUTE_SHADER;
             int shaderID = compileShader(shaderfile, shaderType);            
             glAttachShader(progID, shaderID);
-            shaders.add(shaderfile);
             shaderIDs.add(shaderID);
         }
         bindAttributes();//??
@@ -111,7 +118,7 @@ public abstract class AbstractShaderProg {
         glValidateProgram(progID);        
         if(glGetProgrami(progID, GL_VALIDATE_STATUS)==GL_FALSE) {
             System.out.println(glGetProgramInfoLog(progID, 512));
-            System.exit(-1);
+            //System.exit(-1);
         }
         getAllUniformLocations();
         shaderFileCheck();
@@ -132,7 +139,7 @@ public abstract class AbstractShaderProg {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Couldn't read file "+filename);
-            System.exit(-1);
+            //System.exit(-1);
         }
         int shader = glCreateShader(type);
         glShaderSource(shader, shaderSource);
@@ -140,7 +147,7 @@ public abstract class AbstractShaderProg {
         if(glGetShaderi(shader, GL_COMPILE_STATUS) == GL_FALSE) {
             System.out.println(glGetShaderInfoLog(shader, 512));
             System.out.println("Couldn't conpile shader "+filename);
-            System.exit(-1);
+            //System.exit(-1);
         }
         return shader;
     }
@@ -148,17 +155,20 @@ public abstract class AbstractShaderProg {
 
     void shaderFileCheck() {
         System.out.println("Starting shader file check thread...");
+        done = false;
         Thread fileCheckThread = new Thread(new Runnable() {
             @Override
             public void run() {   //throw new UnsupportedOperationException("Unimplemented method 'run'");
                 while (!done) {
                     try {
                         Thread.sleep(1000);
-                        for(String filename : shaders) {
+                        for(String filename : shadernames) { 
                             long ftime = Files.getLastModifiedTime(Paths.get(filename)).toMillis();
                             if(ftime != timemap.get(filename)) {
                                 System.out.println("Filetime "+filename+" - "+ftime+" THIS WOULD TRIGGER A RELOAD");
                                 timemap.replace(filename, Files.getLastModifiedTime(Paths.get(filename)).toMillis());
+                                reload = true;
+                                done = true;
                             }                            
                         }
                     } catch (Exception e) { e.printStackTrace(); }

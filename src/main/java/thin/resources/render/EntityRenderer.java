@@ -67,6 +67,7 @@ public class EntityRenderer {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m.texture.textureID);
         // glDrawElements(GL_TRIANGLES, m.model.vertexCount, GL_UNSIGNED_INT, 0);
+        shader.loadProjectionMatrix(projection);
 
     }
 
@@ -79,7 +80,7 @@ public class EntityRenderer {
     
     public void prepareInstance(Entity e) {
         Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
-        shader.loadProjectionMatrix(projection);
+        // shader.loadProjectionMatrix(projection);
         shader.loadTransformationMatrix(transform);
     }
 
