@@ -11,13 +11,14 @@ import org.lwjgl.opengl.Display;
 import thin.resources.DisplayManager;
 import thin.resources.Loader;
 import thin.resources.items.Camera;
-import thin.resources.items.Light;
 import thin.resources.items.Entity;
+import thin.resources.items.Light;
 import thin.resources.model.NewModel;
 import thin.resources.model.OBJLoader;
 import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
 import thin.resources.render.MainRenderer;
+import thin.resources.terrain.Terrain;
 import thin.resources.texture.TextureLoader;
 import thin.resources.texture.TextureWrapper;
 import thin.resources.util.KeyMouse;
@@ -70,6 +71,11 @@ public class MainLoop {
 
         TexturedModel m3t = new TexturedModel(m3, tw);
 
+
+        // TerrainRenderer terrainrend = new TerrainRenderer(null, null);
+        Terrain terrain1 = new Terrain(0,0,loader, new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/grass.png")));
+        Terrain terrain2 = new Terrain(0,0,loader, new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/TinyBubbles.png")));
+
         Random r = new Random();
         float d = 25.0f;
         List<Entity>models = new ArrayList<Entity>();
@@ -93,6 +99,9 @@ public class MainLoop {
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
   
             camera.move();
+
+            mainrend.processTerrain(terrain1);
+            mainrend.processTerrain(terrain2);
   
             for (Entity m: models) {
                 m.turn(new Vector3f(0.0f, 0.01f, 0.0f));

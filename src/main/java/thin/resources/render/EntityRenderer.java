@@ -1,10 +1,31 @@
 package thin.resources.render;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_ARRAY;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_NORMAL_ARRAY;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_COORD_ARRAY;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glDisableClientState;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL11.glEnableClientState;
+import static org.lwjgl.opengl.GL11.glNormalPointer;
+import static org.lwjgl.opengl.GL11.glTexCoordPointer;
+import static org.lwjgl.opengl.GL11.glVertexPointer;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.glBufferSubData;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+
+import java.nio.FloatBuffer;
+import java.util.List;
+import java.util.Map;
 
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
@@ -14,12 +35,7 @@ import thin.resources.model.RawModel;
 import thin.resources.model.TexturedModel;
 import thin.resources.shader.ConcreteShader;
 import thin.resources.texture.TextureWrapper;
-import thin.resources.util.*;
-import static thin.resources.util.MathHelper.*;
-
-import java.nio.FloatBuffer;
-import java.util.List;
-import java.util.Map;
+import thin.resources.util.MathHelper;
 
 public class EntityRenderer {
     
@@ -31,10 +47,8 @@ public class EntityRenderer {
         shader = cshader;
         projection = project;
 
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
+        // glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        // glEnable(GL_DEPTH_TEST);
         shader.start();
         shader.loadProjectionMatrix(projection);
         shader.stop();
@@ -46,7 +60,7 @@ public class EntityRenderer {
             prepareModel(tm);
             List<Entity> batch = m.get(tm);
             for(Entity e:batch) {
-                prepareInstance(e);
+                loadModelMatrix(e);
                 glDrawElements(GL_TRIANGLES, tm.model.vertexCount, GL_UNSIGNED_INT, 0);
             }
             unbindModel();
@@ -78,7 +92,7 @@ public class EntityRenderer {
         glBindVertexArray(0);
     }
     
-    public void prepareInstance(Entity e) {
+    public void loadModelMatrix(Entity e) {
         Matrix4f transform = MathHelper.createTransformationMatrix(e.position, e.orientation, e.scale);
         // shader.loadProjectionMatrix(projection);
         shader.loadTransformationMatrix(transform);

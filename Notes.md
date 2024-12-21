@@ -28,6 +28,8 @@
 
 // WA 500 013532
 
+# Ocean/Waves etc.
+https://www.youtube.com/watch?v=PH9q0HNBjT4
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;

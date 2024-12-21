@@ -1,11 +1,9 @@
 package thin.resources.terrain;
 
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import thin.resources.Loader;
 import thin.resources.model.RawModel;
-import thin.resources.model.TexturedModel;
 import thin.resources.texture.TextureWrapper;
 
 
@@ -17,8 +15,12 @@ public class Terrain {
     float x;
     float y;
 
-    RawModel model;
-    TextureWrapper texture;
+    public Vector3f position = new Vector3f(0.0f, 0.0f, 0.0f);
+    public Vector3f orientation = new Vector3f(0.0f, 0.0f, 0.0f);;
+    public Vector3f scale = new Vector3f(1.0f, 1.0f, 1.0f);;
+
+    public RawModel model;
+    public TextureWrapper texture;
 
     public Terrain(int gridX, int gridY, Loader loader, TextureWrapper tex) {
         texture = tex;
@@ -29,12 +31,12 @@ public class Terrain {
 
     int [] indices = new int[256];
 
-    public RawModel generateTerrain(Loader l) {
+    public RawModel generateTerrain(Loader loader) {
         int count = VTXCOUNT * VTXCOUNT;
         float [] vertices = new float[count*3];
         float [] normals = new float[count*3];
         float [] texuvs = new float[count*2];
-        int [] indices = new int[6*(VTXCOUNT-1)*(VTXCOUNT-1)];
+        int [] indices = new int[6*(VTXCOUNT)*(VTXCOUNT)];
         int vertexPointer = 0;
         for (int i=0; i<VTXCOUNT; i++) {
             for (int j=0; j<VTXCOUNT; j++) {
@@ -64,7 +66,8 @@ public class Terrain {
                 indices[pointer++] = btmright;
             }
         }
-        return null;
+        
+        return loader.loadToVAO(vertices, texuvs, normals, indices);
     }
 /*
 
