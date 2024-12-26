@@ -29,6 +29,7 @@
 # Minecraft shaders
 https://www.youtube.com/watch?v=dSS5HuSr4SQ
 https://github.com/saadam1n/MinecraftShaderProgramming/tree/master
+https://shaderlabs.org/wiki/Getting_Started
 
 // WA 500 013532
 
