@@ -68,23 +68,31 @@ public class MainLoop {
         RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/LM.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/dragon.obj", loader);
         // RawModel m3 = OBJLoader.loadOBJModel("src/main/res/mdls/bunny.obj", loader);
+        RawModel m4 = OBJLoader.loadOBJModel("src/main/res/mdls/Interceptor.obj", loader);
 
         TexturedModel m3t = new TexturedModel(m3, tw);
+        TexturedModel m4t = new TexturedModel(m4, tw);
 
 
         // TerrainRenderer terrainrend = new TerrainRenderer(null, null);
         Terrain terrain1 = new Terrain(0,0,loader, new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/grass.png")));
-        Terrain terrain2 = new Terrain(0,0,loader, new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/TinyBubbles.png")));
+        Terrain terrain2 = new Terrain(0,1,loader, new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/texture.png")));
+        Terrain terrain3 = new Terrain(1,0,loader, new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/tree.png")));
+        Terrain terrain4 = new Terrain(1,1,loader, new TextureWrapper(TextureLoader.loadTexture("src/main/res/imgs/TinyBubbles.png")));
 
         Random r = new Random();
-        float d = 25.0f;
+        float d = -400.0f;
         List<Entity>models = new ArrayList<Entity>();
-        for(int i=0;i<0;i++) {
+        models.add( new Entity(m3t, new Vector3f(0.0f, 0.4f, 0.0f), new Vector3f(0.0f, 3.14f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)) );
+        for(int i=0;i<20;i++) {
             models.add(
-                new Entity(m3t,
-                    new Vector3f(2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d),
-                    new Vector3f(6.2f*r.nextFloat(), 6.2f*r.nextFloat(), 6.2f*r.nextFloat()),
+                new Entity(m4t,
+                    // new Vector3f(2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d, 2*d*r.nextFloat()-d),
+                    // new Vector3f(6.2f*r.nextFloat(), 6.2f*r.nextFloat(), 6.2f*r.nextFloat()),
                     // new Vector3f(0.0f, 0.0f, 0.0f),
+                    // new Vector3f(1.0f, 1.0f, 1.0f)
+                    new Vector3f(d*r.nextFloat(), 0.35f, d*r.nextFloat()),
+                    new Vector3f(0.0f, 6.28f*r.nextFloat(), 0.0f),
                     new Vector3f(1.0f, 1.0f, 1.0f)
                 )
             );
@@ -94,7 +102,6 @@ public class MainLoop {
         KeyMouse keymouse = new KeyMouse(false, width, height);
 
         Light light = new Light(new Vector3f(400.0f, 400.0f, 400.0f),new Vector3f(1.0f, 1.0f, 1.0f));
-        models.add( new Entity(m3t, new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(2.0f, 2.0f, 2.0f)) );
 
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {            
   
@@ -102,9 +109,11 @@ public class MainLoop {
 
             mainrend.processTerrain(terrain1);
             mainrend.processTerrain(terrain2);
+            mainrend.processTerrain(terrain3);
+            mainrend.processTerrain(terrain4);
   
             for (Entity m: models) {
-                m.turn(new Vector3f(0.0f, 0.01f, 0.0f));
+                // m.turn(new Vector3f(0.0f, 0.01f, 0.0f));
                 mainrend.peocessEntity(m);
             }
             

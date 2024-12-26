@@ -41,12 +41,12 @@ public class Terrain {
         for (int i=0; i<VTXCOUNT; i++) {
             for (int j=0; j<VTXCOUNT; j++) {
                 vertices[vertexPointer*3] = -(float)j/((float)VTXCOUNT-1) * SIZE;
-                vertices[vertexPointer*3+1] = -(float)i/((float)VTXCOUNT-1) * SIZE;
-                vertices[vertexPointer*3+2] = 0;
+                vertices[vertexPointer*3+1] = 0;
+                vertices[vertexPointer*3+2] = -(float)i/((float)VTXCOUNT-1) * SIZE;
                 normals[vertexPointer*3] = 0;
-                normals[vertexPointer*3+1] = 0;
-                normals[vertexPointer*3+2] = 1;
-                texuvs[vertexPointer*2] = -(float)j/((float)VTXCOUNT-1);
+                normals[vertexPointer*3+1] = 1;
+                normals[vertexPointer*3+2] = 0;
+                texuvs[vertexPointer*2] = -(float)i/((float)VTXCOUNT-1);
                 texuvs[vertexPointer*2+1] = -(float)j/((float)VTXCOUNT-1);
                 vertexPointer++;
             }

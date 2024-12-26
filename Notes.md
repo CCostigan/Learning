@@ -26,6 +26,10 @@
 * Trying YET ANOTHER tutorial
 * https://en.wikibooks.org/wiki/GLSL_Programming/GLUT/Diffuse_Reflection
 
+# Minecraft shaders
+https://www.youtube.com/watch?v=dSS5HuSr4SQ
+https://github.com/saadam1n/MinecraftShaderProgramming/tree/master
+
 // WA 500 013532
 
 # Ocean/Waves etc.

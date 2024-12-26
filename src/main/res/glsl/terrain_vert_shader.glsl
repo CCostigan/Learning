@@ -16,7 +16,7 @@ out vec3 tolightXYZ;
 out vec3 toCameraXYZ;
 
 void main(void) {
-    textureUV = texcoords;
+    textureUV = texcoords * 40;
 
     //Multiply our position by txfm mtx... Because models can rotate
     vec4 worldVtxXYZ = transform * vec4(position, 1.0);
