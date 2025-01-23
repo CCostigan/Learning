@@ -33,6 +33,9 @@ https://shaderlabs.org/wiki/Getting_Started
 
 // WA 500 013532
 
+# Foam build Hellcat
+https://www.youtube.com/watch?v=7_9B6fuY5ZY
+
 # Ocean/Waves etc.
 https://www.youtube.com/watch?v=PH9q0HNBjT4
 
